@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import NotFound from "../pages/NotFound";
-import { AuthRoutes } from "./routes";
+import { AuthRoutes, InformationRoutes } from "./routes";
 // import SecurityCheck from "../components/themeComponents/SecurityCheck";
 // import CommonElement from "../pages/CommonElement";
 import GuestRoute from "./GuestRoute";
@@ -18,6 +18,9 @@ const AppRoutes = () => {
       </Route>
       {/* </Route> */}
 
+      {InformationRoutes?.map((route, id) => (
+        <Route key={id} path={route.path} element={<route.element />} />
+      ))}
       {AuthRoutes?.map((route, id) => (
         <Route
           key={id}

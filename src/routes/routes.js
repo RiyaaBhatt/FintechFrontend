@@ -8,6 +8,8 @@ import { paths } from "./path";
 import Reports from "../pages/dashboard/Reports";
 import Setting from "../pages/dashboard/Setting";
 import Transaction from "../pages/dashboard/Transaction";
+import step1 from "../pages/steps/step1";
+import step2 from "../pages/steps/step2";
 export const AuthRoutes = [
   {
     id: 1,
@@ -100,6 +102,22 @@ export const DashboardRoutes = [
     path: paths.dashboard.transaction,
     name: "transaction",
     element: Transaction,
+    isback: false,
+  },
+];
+export const InformationRoutes = [
+  {
+    id: 1,
+    path: paths.information.profile,
+    name: "Profile",
+    element: step1,
+    isback: false,
+  },
+  {
+    id: 2,
+    path: paths.information.step2,
+    name: " step2",
+    element: step2,
     isback: false,
   },
 ];

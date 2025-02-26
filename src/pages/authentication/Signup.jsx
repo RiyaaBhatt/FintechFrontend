@@ -9,7 +9,11 @@ import { signupValidationSchema } from "../../validations/authValidationSchema";
 import Signupimg from "../../assets/login.webp";
 import { Link } from "react-router-dom";
 import { paths } from "../../routes/path";
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [defaultInitialValues] = React.useState({
     phone_number: "",
     first_name: "",
@@ -17,41 +21,35 @@ const Signup = () => {
     password: "",
     rememberMe: false,
   });
+
   async function onSubmit(paramsData) {
-    const params = {
-      email: paramsData?.email,
-      password: paramsData?.password,
-    };
-    try {
-      //   const response = await SignupUser(params);
-      console.log("Response:", paramsData);
-      // if (response && response.data) {
-      //   await handleSignupResponse(response, paramsData);
-      // } else {
-      //   console.error('No response data received');
-      // }
-    } catch (error) {
-      console.error("Signup error:", error);
-    } finally {
-      /* empty */
-    }
+    console.log("Response:", paramsData);
+    navigate(paths.information.profile);
   }
+
   return (
-    <div className="bg-site-black lg:p-6 sm:p-4 p-3 min-h-screen">
-      <div className="bg-white rounded-2xl md:rounded-3xl p-3 sm:p-4 lg:p-8 lg:min-h-[calc(100vh-48px)] sm:min-h-[calc(100vh-32px)] min-h-[calc(100vh-24px)]">
-        <div className="grid grid-cols-12 h-full lg:gap-6 gap-3">
-          <div className="col-span-6 h-full md:block  hidden">
-            <img src={Signupimg} alt="" />
+    <div className="bg-black lg:p-6 sm:p-4 p-3 min-h-screen flex items-center justify-center">
+      <div className="bg-white rounded-3xl shadow-lg p-6 sm:p-8 lg:p-10 w-full max-w-4xl">
+        <div className="grid grid-cols-12 gap-6">
+          {/* Image Section */}
+          <div className="col-span-6 hidden md:flex items-center justify-center">
+            <img
+              src={Signupimg}
+              alt="Signup Illustration"
+              className="rounded-lg w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+            />
           </div>
-          <div className="md:col-span-6 sm:col-span-8 col-span-12 md:col-start-7 sm:col-start-3">
-            <div className="flex items-start justify-center flex-col md:min-h-full min-h-[calc(100vh-64px)] xl:ps-[88px] ps-0">
-              <Paragraph text24 className={"mb-2"}>
+
+          {/* Form Section */}
+          <div className="md:col-span-6 col-span-12">
+            <div className="flex flex-col justify-center min-h-full">
+              <Paragraph text24 className="mb-2 font-bold text-purple-700">
                 Start your journey by signing up
               </Paragraph>
-
-              <Paragraph text12 className={"md:mb-10 mb-5"}>
-                Welcome !
+              <Paragraph text12 className="mb-6 text-gray-600">
+                Welcome! Let's get started.
               </Paragraph>
+
               <Formik
                 initialValues={defaultInitialValues}
                 validationSchema={signupValidationSchema}
@@ -59,63 +57,82 @@ const Signup = () => {
                 enableReinitialize
               >
                 {({ isSubmitting, values, handleChange }) => (
-                  <Form className="xxl:w-3/4 xl:w-4/5 w-full">
+                  <Form className="w-full">
                     <div className="grid grid-cols-12 gap-4">
+                      {/* Name Field */}
                       <div className="col-span-12">
-                        <div className="col-span-12">
-                          <FormLabel>Name</FormLabel>
-                          <InputType
-                            placeholder="Type here"
-                            type="text"
-                            name="first_name"
-                          />
-                        </div>
-                        <div className="col-span-12">
-                          <FormLabel>phone number</FormLabel>
-                          <InputType
-                            placeholder="Type here"
-                            type="text"
-                            name="phone_number"
-                          />
-                        </div>
-                        <FormLabel>Email address</FormLabel>
+                        <FormLabel className="text-purple-700">Name</FormLabel>
                         <InputType
-                          placeholder="Type here"
+                          placeholder="Enter your name"
                           type="text"
-                          name="email"
+                          name="first_name"
+                          className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
                         />
                       </div>
+
+                      {/* Phone Number Field */}
                       <div className="col-span-12">
-                        <FormLabel>Password</FormLabel>
+                        <FormLabel className="text-purple-700">
+                          Phone Number
+                        </FormLabel>
                         <InputType
-                          placeholder="Type here"
+                          placeholder="Enter your phone number"
+                          type="text"
+                          name="phone_number"
+                          className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
+                        />
+                      </div>
+
+                      {/* Email Field */}
+                      <div className="col-span-12">
+                        <FormLabel className="text-purple-700">
+                          Email Address
+                        </FormLabel>
+                        <InputType
+                          placeholder="Enter your email"
+                          type="email"
+                          name="email"
+                          className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
+                        />
+                      </div>
+
+                      {/* Password Field */}
+                      <div className="col-span-12">
+                        <FormLabel className="text-purple-700">
+                          Password
+                        </FormLabel>
+                        <InputType
+                          placeholder="Enter your password"
                           type="password"
                           name="password"
+                          className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
                         />
                       </div>
-                      <div className="col-span-12">
-                        <div className="flex items-center justify-between gap-3 mb-6">
-                          <Checkbox
-                            w18
-                            name={"rememberMe"}
-                            id={"rememberMe"}
-                            onChange={handleChange}
-                            checked={values.rememberMe}
-                          >
-                            Remember me
-                          </Checkbox>
-                          <Link
-                            to={paths.auth.login}
-                            className="md:text-base md:leading-6 text-sm leading-5 font-semibold text-primary-blue hover:text-site-black transition-all duration-300"
-                          >
-                            already have account?
-                          </Link>
-                        </div>
+
+                      {/* Remember Me & Login Link */}
+                      <div className="col-span-12 flex justify-between items-center">
+                        <Checkbox
+                          name="rememberMe"
+                          id="rememberMe"
+                          onChange={handleChange}
+                          checked={values.rememberMe}
+                          className="text-purple-700"
+                        >
+                          Remember me
+                        </Checkbox>
+                        <Link
+                          to={paths.auth.login}
+                          className="text-purple-700 font-medium hover:underline"
+                        >
+                          Already have an account?
+                        </Link>
                       </div>
+
+                      {/* Signup Button */}
                       <div className="col-span-12">
                         <Button
                           primary
-                          className={"w-full lg:!py-3 bg-[#1e324d]"}
+                          className="w-full py-3 bg-purple-700 text-white hover:bg-purple-900 transition-all duration-300 rounded-lg shadow-md"
                           type="submit"
                           disabled={isSubmitting}
                         >
@@ -133,4 +150,5 @@ const Signup = () => {
     </div>
   );
 };
+
 export default Signup;
