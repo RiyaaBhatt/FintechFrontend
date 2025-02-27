@@ -11,8 +11,11 @@ import loginimg from "../../assets/Login.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/path";
 import { LoginUser } from "../../services/authService";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [defaultInitialValues] = React.useState({
     username: "",
     password: "",
@@ -29,6 +32,7 @@ const Login = () => {
       console.log("Response: login clicked");
       const response = await LoginUser(params);
       if (response?.status === 200) {
+        dispatch(setUser(((response?.data))));
         navigate(paths.dashboard.home);
       }
     } catch (error) {

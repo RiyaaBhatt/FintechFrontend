@@ -2,21 +2,26 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../components/Header";
 import { Outlet } from "react-router-dom";
+
 const Wrapper = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
     <>
+      {/* Header at the top */}
       <Header />
-      <div className="flex mt-[50px]">
+
+      {/* Sidebar + Main Content Wrapper */}
+      <div className="flex h-screen mt-[50px]">
+        {/* Sidebar (now below the header) */}
         <div
-          className={`bg-white text-black h-screen ${
+          className={`bg-white text-black h-full shadow-md transition-all duration-300 ease-in-out ${
             isOpen ? "w-64" : "w-20"
-          } transition-all duration-300 ease-in-out fixed`}
+          }`}
         >
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="  p-5 focus:outline-none w-full text-right text-4xl "
+            className="p-5 focus:outline-none w-full text-right text-4xl"
           >
             {isOpen ? "← " : "→"}
           </button>
@@ -45,6 +50,7 @@ const Wrapper = () => {
                 {isOpen && <span className="ml-2">Goals</span>}
               </Link>
             </li>
+
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link
                 to="/dashboard/investments"
@@ -76,9 +82,11 @@ const Wrapper = () => {
             </li>
           </ul>
         </div>
-      </div>
-      <div className="absolute xs:left-[20%] md:left-[8%] lg:left-[15%] xl:left-[18%] xxl:left-[20%]  p-15  shadow-cardShadow rounded-lg">
-        <Outlet />
+
+        {/* Main Content Area (takes remaining space) */}
+        <div className="flex-1 p-6 shadow-card rounded-lg">
+          <Outlet />
+        </div>
       </div>
     </>
   );
