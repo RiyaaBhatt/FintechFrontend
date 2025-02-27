@@ -1,5 +1,7 @@
 export const API = {
-  PROFILE: {},
+  PROFILE: {
+    ADD_GOAL:"api/goals/"
+  },
   AUTH: {
     LOGIN: "/api/login/",
     SIGNUP: "/api/register/",
