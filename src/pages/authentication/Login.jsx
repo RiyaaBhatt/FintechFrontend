@@ -10,10 +10,11 @@ import { loginValidationSchema } from "../../validations/authValidationSchema";
 import loginimg from "../../assets/Login.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/path";
+import { LoginUser } from "../../services/authService";
 
 const Login = () => {
   const [defaultInitialValues] = React.useState({
-    email: "",
+    username: "",
     password: "",
     rememberMe: false,
   });
@@ -21,11 +22,15 @@ const Login = () => {
 
   async function onSubmit(paramsData) {
     const params = {
-      email: paramsData?.email,
+      username: paramsData?.username,
       password: paramsData?.password,
     };
     try {
-      console.log("Response:", paramsData);
+      console.log("Response: login clicked");
+      const response = await LoginUser(params);
+      if (response?.status === 200) {
+        navigate(paths.dashboard.home);
+      }
     } catch (error) {
       console.error("Login error:", error);
     }
@@ -54,11 +59,11 @@ const Login = () => {
               {({ isSubmitting, values, handleChange }) => (
                 <Form className="space-y-5">
                   <div>
-                    <FormLabel>Email address</FormLabel>
+                    <FormLabel>username </FormLabel>
                     <InputType
                       placeholder="Type here"
                       type="text"
-                      name="email"
+                      name="username"
                     />
                   </div>
                   <div>

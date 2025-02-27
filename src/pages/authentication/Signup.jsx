@@ -10,6 +10,7 @@ import Signupimg from "../../assets/login.webp";
 import { Link } from "react-router-dom";
 import { paths } from "../../routes/path";
 import { useNavigate } from "react-router-dom";
+import { SignupUser } from "../../services/authService";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -24,7 +25,12 @@ const Signup = () => {
 
   async function onSubmit(paramsData) {
     console.log("Response:", paramsData);
-    navigate(paths.information.profile);
+    try {
+      const response = await SignupUser(paramsData);
+      if (response?.status === 201) navigate(paths.information.profile);
+    } catch (err) {
+      console.error("Signup error:", err);
+    }
   }
 
   return (
@@ -69,7 +75,17 @@ const Signup = () => {
                           className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
                         />
                       </div>
-
+                      <div className="col-span-12">
+                        <FormLabel className="text-purple-700">
+                          Username
+                        </FormLabel>
+                        <InputType
+                          placeholder="Enter your username"
+                          type="text"
+                          name="username"
+                          className="border-gray-300 focus:border-purple-700 focus:ring-2 focus:ring-purple-700"
+                        />
+                      </div>
                       {/* Phone Number Field */}
                       <div className="col-span-12">
                         <FormLabel className="text-purple-700">

@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.0",
     "@tailwindcss/vite": "^4.0.8",
+    "axios": "^1.8.1",
     "classnames": "^2.5.1",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.7",

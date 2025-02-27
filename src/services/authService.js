@@ -4,7 +4,9 @@ import { axiosGet, axiosPatch, axiosPost } from '../axios/axiosMiddleware'
 export const LoginUser = (data) => {
   return axiosPost(API?.AUTH?.LOGIN, data)
 }
-
+export const SignupUser = (data) => {
+  return axiosPost(API?.AUTH?.SIGNUP, data)
+}
 export const ForgotPassword = (data) => {
   return axiosPost(API?.AUTH?.FORGOT, data)
 }

@@ -1,90 +1,104 @@
-import { clearUser, setToken } from '../redux/slices/userSlice'
-import axios from 'axios'
-import { ToastShow } from '../redux/slices/toastSlice'
-import { API } from '../apiEndPoints/apiEndPoints'
+import { clearUser, setToken } from "../redux/slices/userSlice";
+import axios from "axios";
+import { ToastShow } from "../redux/slices/toastSlice";
+import { API } from "../apiEndPoints/apiEndPoints";
 
 // const BASE_URL = "http://localhost:1234"
 // console.log(BASE_URL)
 
-const BASE_URL = "http://localhost:1234"
+const BASE_URL = import.meta.env.VITE_API_URL;
 const setupAxios = (store) => {
   axios.interceptors.request.use((request) => {
-    const storeData = store.getState()
+    const storeData = store.getState();
 
-    const authToken = storeData.user.token
+    const authToken = storeData.user.token;
     if (authToken) {
-      request.headers.Authorization = `Bearer ${authToken}`
+      request.headers.Authorization = `Bearer ${authToken}`;
     }
-    return request
-  })
+    return request;
+  });
 
   axios.interceptors.response.use(
     (res) => {
-      if (res.config.method !== 'get') {
-        store.dispatch(ToastShow({ message: res.data.message, type: res.data.success ? 'sucess' : 'error' }))
+      if (res.config.method !== "get") {
+        store.dispatch(
+          ToastShow({
+            message: res.data.message,
+            type: res.data.success ? "sucess" : "error",
+          })
+        );
       }
-      return res
+      return res;
     },
     async (error) => {
-      const storeData = store?.getState()
-      const originalRequest = error?.config
+      const storeData = store?.getState();
+      const originalRequest = error?.config;
       if (error?.response?.status === 401 && !originalRequest?._retry) {
-        originalRequest._retry = true
-        const refreshToken = storeData?.user?.refreshToken
+        originalRequest._retry = true;
+        const refreshToken = storeData?.user?.refreshToken;
         try {
           await axios({
-            method: 'post',
+            method: "post",
             url: `${BASE_URL}${API.AUTH.REFRESH_TOKEN}`,
             data: { refresh: refreshToken },
           })
             .then((response) => {
               if (response?.data?.access && response?.status === 200) {
-                store.dispatch(setToken(response?.data?.access))
+                store.dispatch(setToken(response?.data?.access));
 
                 // axios.headers.common['Authorization'] = `Bearer ${response?.data?.access}`
-                axios.headers.Authorization = `Bearer ${response?.data?.access}`
-                return response?.data?.access
+                axios.headers.Authorization = `Bearer ${response?.data?.access}`;
+                return response?.data?.access;
               } else {
                 store.dispatch(
                   ToastShow({
-                    message: error?.response?.errors?.length ? Object.values(error?.response.errors[0])[0] : '',
-                    type: 'error',
+                    message: error?.response?.errors?.length
+                      ? Object.values(error?.response.errors[0])[0]
+                      : "",
+                    type: "error",
                   }),
-                  store.dispatch(clearUser()),
-                )
+                  store.dispatch(clearUser())
+                );
               }
             })
-            .catch((error) => error?.response?.data)
-          return axios(originalRequest)
-        // eslint-disable-next-line no-unused-vars
+            .catch((error) => error?.response?.data);
+          return axios(originalRequest);
+          // eslint-disable-next-line no-unused-vars
         } catch (refreshError) {
           if (storeData.user.token !== null) {
-            if (error?.response?.status === 401 || error?.response?.status === 403) {
+            if (
+              error?.response?.status === 401 ||
+              error?.response?.status === 403
+            ) {
               if (error.response.errors) {
                 store.dispatch(
                   ToastShow({
-                    message: error?.response?.errors?.length ? Object.values(error?.response.errors)[0] : '',
-                    type: 'error',
-                  }),
-                )
+                    message: error?.response?.errors?.length
+                      ? Object.values(error?.response.errors)[0]
+                      : "",
+                    type: "error",
+                  })
+                );
               }
-              store.dispatch(clearUser())
+              store.dispatch(clearUser());
             }
           }
         }
       } else {
         store.dispatch(
           ToastShow({
-            message: error?.response?.data.errors?.length ? Object.values(error?.response?.data.errors[0])[0] : '',
-            type: 'error',
-          }),
-        )
+            message: error?.response?.data.errors?.length
+              ? Object.values(error?.response?.data.errors[0])[0]
+              : "",
+            type: "error",
+          })
+        );
       }
-    },
-  )
-}
+    }
+  );
+};
 
-export default setupAxios
+export default setupAxios;
 
 // export async function axiosGet(url, data = null) {
 //   console.log(`${BASE_URL}${url}`);
@@ -119,18 +133,18 @@ export const axiosConfig = (method, url, config, data) => {
     url: `${BASE_URL}${url}`,
     ...config,
     data,
-  })
-}
+  });
+};
 
 export const axiosPatch = (url, data) => {
-  return axios.patch(`${BASE_URL}${url}`, data)
-}
+  return axios.patch(`${BASE_URL}${url}`, data);
+};
 
 export const axiosPut = (url, data) => {
-  return axios.put(`${BASE_URL}${url}`, data)
-}
+  return axios.put(`${BASE_URL}${url}`, data);
+};
 
 export const axiosDelete = (url, data = null) => {
-  console.log(url)
-  return axios.delete(`${BASE_URL}${url}`, data)
-}
+  console.log(url);
+  return axios.delete(`${BASE_URL}${url}`, data);
+};

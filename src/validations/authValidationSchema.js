@@ -2,12 +2,10 @@ import * as Yup from "yup";
 
 export const loginValidationSchema = () =>
   Yup.object().shape({
-    email: Yup.string()
-      .email("Email is invalid")
+    username: Yup.string()
       .trim()
       .max(255, "Maximum 255 Characters allowed")
-      .required("Email is required")
-      .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, "Email is invalid"),
+      .required("username is required"),
     password: Yup.string()
       .trim()
       .max(255, "Maximum 255 Characters allowed")
@@ -23,6 +21,10 @@ export const signupValidationSchema = () =>
       .max(255, "Maximum 255 Characters allowed")
       .required("Email is required")
       .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, "Email is invalid"),
+    username: Yup.string()
+      .trim()
+      .max(255, "Maximum 255 Characters allowed")
+      .required("username is required"),
     password: Yup.string()
       .trim()
       .max(255, "Maximum 255 Characters allowed")
