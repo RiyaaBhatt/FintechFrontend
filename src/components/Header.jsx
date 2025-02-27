@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="">
       <header className="fixed top-0 left-0 w-full flex items-center justify-between bg-[#A9DEF9] p-4 shadow-sm z-50 ">
@@ -34,7 +36,12 @@ const Header = () => {
               />
             </svg>
           </button>
-          <button className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors">
+          <button
+            className="p-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors"
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

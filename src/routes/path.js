@@ -7,6 +7,7 @@ export const paths = {
     otp: "/otp",
     changePassword: "/change-password",
     signup: "/signup",
+    profile_page: "/profile",
   },
   information: {
     profile: "/information/profile/step1",

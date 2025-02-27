@@ -10,6 +10,7 @@ import Setting from "../pages/dashboard/Setting";
 import Transaction from "../pages/dashboard/Transaction";
 import step1 from "../pages/steps/step1";
 import step2 from "../pages/steps/step2";
+import ProfilePage from "../pages/Profile";
 export const AuthRoutes = [
   {
     id: 1,
@@ -25,6 +26,7 @@ export const AuthRoutes = [
     element: Signup,
     isback: false,
   },
+
   // {
   //   id: 2,
   //   path: paths.auth.addNewPassword,
@@ -102,6 +104,13 @@ export const DashboardRoutes = [
     path: paths.dashboard.transaction,
     name: "transaction",
     element: Transaction,
+    isback: false,
+  },
+  {
+    id: 6,
+    path: paths.auth.profile_page,
+    name: "profile",
+    element: ProfilePage,
     isback: false,
   },
 ];
