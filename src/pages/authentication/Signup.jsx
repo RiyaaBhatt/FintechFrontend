@@ -11,10 +11,11 @@ import { Link } from "react-router-dom";
 import { paths } from "../../routes/path";
 import { useNavigate } from "react-router-dom";
 import { SignupUser } from "../../services/authService";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/slices/userSlice";
 const Signup = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const [defaultInitialValues] = React.useState({
     phone_number: "",
     first_name: "",
@@ -27,7 +28,10 @@ const Signup = () => {
     console.log("Response:", paramsData);
     try {
       const response = await SignupUser(paramsData);
-      if (response?.status === 201) navigate(paths.information.profile);
+      if (response?.status === 201) {
+        dispatch(setUser(response?.data));
+        navigate(paths.information.profile);
+      }
     } catch (err) {
       console.error("Signup error:", err);
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import { Bar, Pie } from "react-chartjs-2";
 // import { Chart, registerables } from "chart.js";
 // Chart.register(...registerables);
@@ -173,7 +174,10 @@ import {
   YAxis,
   Legend,
 } from "recharts";
-
+import { fetchInvestment } from "../../services/GoalService";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ToastShow, toastSlice } from "../../redux/slices/toastSlice";
 const assetData = [
   { name: "Stocks", value: 50 },
   { name: "Bonds", value: 20 },
@@ -190,6 +194,21 @@ const incomeExpenseData = [
 ];
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const [transactionData, setTransactionData] = useState([]);
+  const user = useSelector((state) => state.user);
+  useEffect(() => {
+    console.log(user);
+
+    const userId = user?.user?.id;
+    try {
+      console.log("userId", user?.user?.user?.id);
+      const data = fetchInvestment(user?.user?.user?.id);
+    } catch (err) {
+      dispatch(toastSlice(err));
+      console.error("error", err);
+    }
+  }, []);
   return (
     <div className="p-6 h-screen bg-gray-100 flex flex-col">
       {/* Cards */}
@@ -328,3 +347,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+// Compare this snippet from nutrition/src/pages/dashboard/Profile.jsx:

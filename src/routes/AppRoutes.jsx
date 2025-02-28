@@ -6,7 +6,7 @@ import { AuthRoutes, InformationRoutes } from "./routes";
 import GuestRoute from "./GuestRoute";
 import { DashboardRoutes } from "./routes";
 import Wrapper from "../pages/dashboard/wrapper";
-
+// import SecurityCheck from "../components/themeComponents/SecurityCheck";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -15,8 +15,8 @@ const AppRoutes = () => {
         {(DashboardRoutes || [])?.map((route, id) => (
           <Route key={id} path={route.path} element={<route.element />} />
         ))}
+        {/* </Route> */}
       </Route>
-      {/* </Route> */}
 
       {InformationRoutes?.map((route, id) => (
         <Route key={id} path={route.path} element={<route.element />} />
