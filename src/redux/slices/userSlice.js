@@ -5,6 +5,7 @@ const initialState = {
     id: null,
     username: null,
     email: null,
+    savings: null,
     is_verified: null,
   },
   refresh: null,

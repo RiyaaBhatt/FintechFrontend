@@ -458,6 +458,7 @@ import {
   addInvestment,
   addExpense,
   addGoal,
+  patchSavings,
 } from "../../services/GoalService";
 
 const steps = [
@@ -489,6 +490,7 @@ const MultiStepForm = () => {
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
   const userData = useSelector((state) => state?.user?.user);
+  const access = useSelector((state) => state?.user?.user?.access);
 
   const initialValues = {
     fullName: "",
@@ -536,6 +538,7 @@ const MultiStepForm = () => {
       stock_updates: values.stock_updates,
       market_trends: values.market_trends,
     });
+    await patchSavings(access, { savings: values.savings });
 
     await Promise.all(
       values.financialGoals.map((goal) =>
@@ -704,8 +707,17 @@ const MultiStepForm = () => {
               {/* Step 3: Income, Expenses & Investments */}
               {step === 3 && (
                 <>
-                  <h3>Income Details</h3>
-                  <InputType name="salary" type="number" placeholder="Salary" />
+                  <h3>Unallocated Fund (on hand money)</h3>
+                  <Field
+                    name="savings"
+                    type="number"
+                    placeholder="unallocated fund"
+                  />
+                  <ErrorMessage
+                    name="savings"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
 
                   <h3>Budget Categories</h3>
                   <FieldArray name="budgetCategories">
@@ -795,8 +807,6 @@ const MultiStepForm = () => {
                       </div>
                     )}
                   </FieldArray>
-
-              
                 </>
               )}
 

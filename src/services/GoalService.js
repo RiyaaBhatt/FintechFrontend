@@ -1,5 +1,35 @@
 import { API } from "../apiEndPoints/apiEndPoints";
 import { axiosGet, axiosPost, axiosPut } from "../axios/axiosMiddleware";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+export const patchSavings = async (access, savings) => {
+  try {
+    // Retrieve the access token from the Redux state
+
+    if (!access) {
+      throw new Error("Access token is missing");
+    }
+
+    // Set up the PATCH request with the Authorization header
+    const response = await axios.patch(
+      "http://localhost:8000/api/savings/", // Replace with your actual API endpoint
+      savings,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`, // Attach the access token here
+          "Content-Type": "application/json", // Ensure the correct content type
+        },
+      }
+    );
+
+    // Return the response (or you can handle success accordingly)
+    return response.data;
+  } catch (error) {
+    console.error("Error in patchSavings:", error);
+    throw error; // Handle the error as needed (e.g., show a notification or log it)
+  }
+};
 
 export const updateUserProfile = async (userId, userData) => {
   try {

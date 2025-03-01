@@ -23,7 +23,6 @@ const validationSchemas = [
           .typeError("Target amount must be a number"),
         current_savings: Yup.number()
           .required("Current savings is required")
-          .positive("Current savings must be positive")
           .typeError("Current savings must be a number"),
         deadline: Yup.date().required("Deadline is required"),
       })
@@ -32,21 +31,21 @@ const validationSchemas = [
 
   // Step 3: Income, Expenses & Investments
   Yup.object({
-    salary: Yup.number()
-      .required("Salary is required")
-      .positive("Salary must be positive")
-      .typeError("Salary must be a number"),
-    budgetCategories: Yup.array()
-      .of(
-        Yup.object({
-          category: Yup.string().required("Category is required"),
-          limit: Yup.number()
-            .required("Limit is required")
-            .positive("Limit must be positive")
-            .typeError("Limit must be a number"),
-        })
-      )
-      .min(1, "At least one budget category is required"),
+    savings: Yup.number()
+      .required("Unallocated fund is required")
+      .positive("Unallocated fund must be positive")
+      .typeError("Unallocated fund must be a number"),
+
+    budgetCategories: Yup.array().of(
+      Yup.object({
+        category: Yup.string().required("Category is required"),
+        limit: Yup.number()
+          .required("Limit is required")
+          .positive("Limit must be positive")
+          .typeError("Limit must be a number"),
+      })
+    ),
+    // .min(0, "At least one budget category is required"),
     investments: Yup.array().of(
       Yup.object({
         investment_type: Yup.string().required("Investment type is required"),
