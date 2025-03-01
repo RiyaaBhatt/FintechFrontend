@@ -56,17 +56,6 @@ const validationSchemas = [
           .typeError("Amount must be a number"),
       })
     ),
-    expenses: Yup.array().of(
-      Yup.object({
-        description: Yup.string().required("Description is required"),
-        amount: Yup.number()
-          .required("Amount is required")
-          .positive("Amount must be positive")
-          .typeError("Amount must be a number"),
-        category: Yup.string().required("Category is required"),
-        payment_method: Yup.string().required("Payment method is required"),
-      })
-    ),
   }),
 
   // Step 4: Notifications & Alerts (Optional fields, no validation needed for now)

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { fetchInvestment, addInvestment } from "../../services/GoalService"; // Assuming addInvestment is a function in GoalService
 import { useDispatch, useSelector } from "react-redux";
+import InvestmentRecommendation from "../../components/InvesmentRecommandation.Main";
 
 const Investments = () => {
   const dispatch = useDispatch();
   const [investments, setInvesmentData] = useState([]);
-  const [showModal, setShowModal] = useState(false); // To control modal visibility
+  const [showModal, setShowModal] = useState(false); 
   const [newInvestment, setNewInvestment] = useState({
     investment_type: "",
     amount: "",
@@ -21,10 +22,9 @@ const Investments = () => {
         console.log("userId", userId);
         if (!userId) return;
 
-        const data = await fetchInvestment(userId); // Assuming fetchInvestment returns a promise
+        const data = await fetchInvestment(userId);
         console.log("Investment data", data);
 
-        // Check if data is an array and set it correctly
         if (Array.isArray(data)) {
           setInvesmentData(data);
         } else {
@@ -165,6 +165,7 @@ const Investments = () => {
           </div>
         </div>
       )}
+      <InvestmentRecommendation />
     </div>
   );
 };

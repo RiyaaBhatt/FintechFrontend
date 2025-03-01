@@ -20,6 +20,7 @@ export const updateUserProfile = async (userId, userData) => {
 
 export const addGoal = async (goalData) => {
   try {
+    console.log(goalData);
     const response = await axiosPost(`${API.PROFILE.ADD_GOAL}`, goalData);
     return response.data;
   } catch (error) {
@@ -92,4 +93,9 @@ export const fetchInvestment = async (userId) => {
     );
     throw error;
   }
+};
+
+export const dashboardService = async (userId) => {
+  const data = await axiosGet(`${API.PROFILE.DASHBOARD}${userId}`);
+  return data;
 };

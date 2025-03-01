@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { addGoal, fetchGoal } from "../../services/GoalService";
 import { useSelector } from "react-redux";
 import { Formik } from "formik";
+import formatDateToYYYYMMDD from "../../utils/commonHelper";
 
 const Goals = () => {
   const user = useSelector((state) => state.user);
@@ -49,12 +50,13 @@ const Goals = () => {
       ...values,
       target_amount: parseFloat(values.target_amount), // Convert to number
       current_savings: parseFloat(values.current_savings), // Convert to number
-      deadline: new Date(values.deadline), // Convert to Date object if needed
+      deadline: formatDateToYYYYMMDD(values.deadline), // Convert to Date object if needed
       user: userId,
     };
 
     try {
-      const newGoalData = await addGoal(userId, goalData);
+      console.log(goalData);
+      const newGoalData = await addGoal(goalData);
       console.log("Added goal", newGoalData);
       setGoals((prevData) => [...prevData, newGoalData]);
       setShowAddGoalForm(false); // Close the form after adding goal

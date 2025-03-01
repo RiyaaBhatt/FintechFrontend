@@ -571,17 +571,17 @@ const MultiStepForm = () => {
       )
     );
 
-    await Promise.all(
-      values.expenses.map((expense) =>
-        addExpense(userData?.user?.id, {
-          description: expense.description,
-          amount: expense.amount,
-          category: expense.category,
-          payment_method: expense.payment_method,
-          user: userData?.user?.id,
-        })
-      )
-    );
+    // await Promise.all(
+    //   values.expenses.map((expense) =>
+    //     addExpense(userData?.user?.id, {
+    //       description: expense.description,
+    //       amount: expense.amount,
+    //       category: expense.category,
+    //       payment_method: expense.payment_method,
+    //       user: userData?.user?.id,
+    //     })
+    //   )
+    // );
 
     navigate(paths.dashboard.home);
   };
@@ -796,55 +796,7 @@ const MultiStepForm = () => {
                     )}
                   </FieldArray>
 
-                  <h3>Expenses</h3>
-                  <FieldArray name="expenses">
-                    {({ push, remove }) => (
-                      <div>
-                        {values.expenses.map((expense, index) => (
-                          <div key={index}>
-                            <Field
-                              name={`expenses[${index}].description`}
-                              placeholder="Description"
-                            />
-                            <Field
-                              name={`expenses[${index}].amount`}
-                              placeholder="Amount"
-                              type="number"
-                            />
-                            <Field
-                              name={`expenses[${index}].category`}
-                              placeholder="Category"
-                            />
-                            <Field
-                              name={`expenses[${index}].payment_method`}
-                              placeholder="Payment Method"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => remove(index)}
-                              className="text-red-500"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            push({
-                              description: "",
-                              amount: "",
-                              category: "",
-                              payment_method: "",
-                            })
-                          }
-                          className="text-blue-500"
-                        >
-                          + Add Expense
-                        </button>
-                      </div>
-                    )}
-                  </FieldArray>
+              
                 </>
               )}
 

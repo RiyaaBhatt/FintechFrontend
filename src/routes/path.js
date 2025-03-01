@@ -20,5 +20,6 @@ export const paths = {
     investments: "/dashboard/investments",
     reports: "/dashboard/reports",
     settings: "/dashboard/settings",
+    chatbot: "/chatbot",
   },
 };

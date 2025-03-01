@@ -6,6 +6,8 @@ export const API = {
     ADD_INVESTMENT: "/api/investments/",
     UPDATE_PROFILE: "/api/complete-profile/",
     GET_INVESMENT: "/api/investments/user/",
+    DASHBOARD: "/api/dashboard/",
+    CHATBOT: "/api/chatbot/",
   },
   AUTH: {
     LOGIN: "/api/login/",

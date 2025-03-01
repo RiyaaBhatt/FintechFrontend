@@ -13,9 +13,9 @@ const Wrapper = () => {
 
       {/* Sidebar + Main Content Wrapper */}
       <div className="flex h-screen mt-[50px]">
-        {/* Sidebar (now below the header) */}
+        {/* Sidebar (fixed position) */}
         <div
-          className={`bg-white text-black h-full shadow-md transition-all duration-300 ease-in-out ${
+          className={`bg-white text-black h-full shadow-md transition-all duration-300 ease-in-out fixed top-0 left-0 bottom-0 ${
             isOpen ? "w-64" : "w-20"
           }`}
         >
@@ -26,14 +26,15 @@ const Wrapper = () => {
             {isOpen ? "← " : "→"}
           </button>
 
-          <ul className="space-y-4 px-2">
+          <ul className="space-y-4 px-2 mt-16">
+            {" "}
+            {/* Added mt-16 for space below the header */}
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link to="/dashboard/home" className="flex items-center w-full">
                 <span>🏠</span>
                 {isOpen && <span className="ml-2">Home</span>}
               </Link>
             </li>
-
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link
                 to="/dashboard/transaction"
@@ -43,14 +44,12 @@ const Wrapper = () => {
                 {isOpen && <span className="ml-2">Transaction</span>}
               </Link>
             </li>
-
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link to="/dashboard/goals" className="flex items-center w-full">
                 <span>💱</span>
                 {isOpen && <span className="ml-2">Goals</span>}
               </Link>
             </li>
-
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link
                 to="/dashboard/investments"
@@ -60,7 +59,6 @@ const Wrapper = () => {
                 {isOpen && <span className="ml-2">Investments</span>}
               </Link>
             </li>
-
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link
                 to="/dashboard/reports"
@@ -70,7 +68,6 @@ const Wrapper = () => {
                 {isOpen && <span className="ml-2">Reports</span>}
               </Link>
             </li>
-
             <li className="flex items-center space-x-2 p-2 rounded hover:bg-gray-300">
               <Link
                 to="/dashboard/settings"
@@ -83,8 +80,8 @@ const Wrapper = () => {
           </ul>
         </div>
 
-        {/* Main Content Area (takes remaining space) */}
-        <div className="flex-1 p-6 shadow-card rounded-lg">
+        {/* Main Content Area (scrollable) */}
+        <div className="flex-1 p-6 ml-[256px] overflow-y-auto h-screen">
           <Outlet />
         </div>
       </div>

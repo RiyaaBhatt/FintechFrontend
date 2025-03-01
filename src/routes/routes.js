@@ -11,6 +11,7 @@ import Transaction from "../pages/dashboard/Transaction";
 import step1 from "../pages/steps/step1";
 import step2 from "../pages/steps/step2";
 import ProfilePage from "../pages/Profile";
+import Chatbot from "../pages/dashboard/Chatbot";
 export const AuthRoutes = [
   {
     id: 1,
@@ -100,17 +101,24 @@ export const DashboardRoutes = [
     isback: false,
   },
   {
-    id: 5,
+    id: 6,
     path: paths.dashboard.transaction,
     name: "transaction",
     element: Transaction,
     isback: false,
   },
   {
-    id: 6,
+    id: 7,
     path: paths.auth.profile_page,
     name: "profile",
     element: ProfilePage,
+    isback: false,
+  },
+  {
+    id: 8,
+    path: paths.dashboard.chatbot,
+    name: "chatbot",
+    element: Chatbot,
     isback: false,
   },
 ];

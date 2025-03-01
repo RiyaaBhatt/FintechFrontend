@@ -174,7 +174,7 @@ import {
   YAxis,
   Legend,
 } from "recharts";
-import { fetchInvestment } from "../../services/GoalService";
+import { dashboardService, fetchInvestment } from "../../services/GoalService";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastShow, toastSlice } from "../../redux/slices/toastSlice";
@@ -208,6 +208,13 @@ const Dashboard = () => {
       dispatch(toastSlice(err));
       console.error("error", err);
     }
+  }, []);
+  const fetchUserData = async () => {
+    const data = await dashboardService(user?.user?.user?.id);
+    console.log(data);
+  };
+  useEffect(() => {
+    fetchUserData();
   }, []);
   return (
     <div className="p-6 h-screen bg-gray-100 flex flex-col">
