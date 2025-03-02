@@ -30,6 +30,33 @@ export const patchSavings = async (access, savings) => {
     throw error; // Handle the error as needed (e.g., show a notification or log it)
   }
 };
+export const addGoal = async (access, goalData) => {
+  try {
+    // Retrieve the access token from the Redux state
+
+    if (!access) {
+      throw new Error("Access token is missing");
+    }
+
+    // Set up the PATCH request with the Authorization header
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/financial-goals/", // Replace with your actual API endpoint
+      goalData,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`, // Attach the access token here
+          "Content-Type": "application/json", // Ensure the correct content type
+        },
+      }
+    );
+
+    // Return the response (or you can handle success accordingly)
+    return response.data;
+  } catch (error) {
+    console.error("Error in patchSavings:", error);
+    throw error; // Handle the error as needed (e.g., show a notification or log it)
+  }
+};
 
 export const updateUserProfile = async (userId, userData) => {
   try {
@@ -48,26 +75,6 @@ export const updateUserProfile = async (userId, userData) => {
   }
 };
 
-export const addGoal = async (goalData) => {
-  try {
-    console.log(goalData);
-    const response = await axiosPost(`${API.PROFILE.ADD_GOAL}`, goalData);
-    return response.data;
-  } catch (error) {
-    console.error("Error adding goal:", error.response?.data || error.message);
-    throw error;
-  }
-};
-export const fetchGoal = async (id) => {
-  try {
-    const response = await axiosGet(`${API.PROFILE.ADD_GOAL}${id}/`);
-    return response.data;
-  } catch (error) {
-    console.error("Error adding goal:", error.response?.data || error.message);
-    throw error;
-  }
-};
-
 export const addExpense = async (userId, expenseData) => {
   try {
     const response = await axiosPost(`${API.PROFILE.ADD_EXPENSE}`, expenseData);
@@ -77,7 +84,61 @@ export const addExpense = async (userId, expenseData) => {
       "Error adding expense:",
       error.response?.data || error.message
     );
+
     throw error;
+  }
+};
+export const fetchGoal = async (access) => {
+  try {
+    // Retrieve the access token from the Redux state
+
+    if (!access) {
+      throw new Error("Access token is missing");
+    }
+
+    // Set up the PATCH request with the Authorization header
+    const response = await axios.get(
+      "http://127.0.0.1:8000/api/financial-goals/", // Replace with your actual API endpoint
+      {
+        headers: {
+          Authorization: `Bearer ${access}`, // Attach the access token here
+          "Content-Type": "application/json", // Ensure the correct content type
+        },
+      }
+    );
+
+    // Return the response (or you can handle success accordingly)
+    return response.data;
+  } catch (error) {
+    console.error("Error in patchSavings:", error);
+    throw error; // Handle the error as needed (e.g., show a notification or log it)
+  }
+};
+// Update Goal Service with Static Endpoint
+export const updateGoal = async (access, goalId, goalData) => {
+  try {
+    if (!access) {
+      throw new Error("Access token is missing");
+    }
+
+    // Static API endpoint for updating goal
+    const endpoint = `http://127.0.0.1:8000/api/financial-goals/${goalId}/`; // Static endpoint
+
+    // Send PATCH request to update goal
+    const response = await axios.patch(endpoint, goalData, {
+      headers: {
+        Authorization: `Bearer ${access}`, // Include the access token for authorization
+        "Content-Type": "application/json", // Ensure content type is JSON
+      },
+    });
+
+    return response.data; // Return the updated goal data
+  } catch (error) {
+    console.error(
+      "Error in updateGoal service:",
+      error.response?.data || error.message
+    );
+    throw error; // Re-throw error for handling by calling function
   }
 };
 

@@ -496,6 +496,7 @@ const MultiStepForm = () => {
     fullName: "",
     age: "",
     salary: "",
+    savings: "",
     financialGoals: [
       { goal_name: "", target_amount: "", current_savings: 0.0, deadline: "" },
     ],
@@ -542,7 +543,7 @@ const MultiStepForm = () => {
 
     await Promise.all(
       values.financialGoals.map((goal) =>
-        addGoal({
+        addGoal(access, {
           goal_name:
             goal.goal_name == "Other" ? goal.customGoal : goal.goal_name,
           target_amount: goal.target_amount,
